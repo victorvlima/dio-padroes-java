@@ -1,7 +1,14 @@
 package br.com.dio.projeto.padroes.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 /**
  * Os atributos desse modelo/entity foram gerados automaticamente pelo site
@@ -29,6 +36,9 @@ public class Endereco {
     private String gia;
     private String ddd;
     private String siafi;
+
+    @OneToMany(mappedBy = "endereco", fetch = FetchType.LAZY)
+    private Set<Cliente> clientes = new HashSet<>();
 
     public String getCep() {
         return cep;
@@ -134,69 +144,25 @@ public class Endereco {
         this.siafi = siafi;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Endereco.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this)))
-                .append('[');
-        sb.append("cep");
-        sb.append('=');
-        sb.append(((this.cep == null) ? "<null>" : this.cep));
-        sb.append(',');
-        sb.append("logradouro");
-        sb.append('=');
-        sb.append(((this.logradouro == null) ? "<null>" : this.logradouro));
-        sb.append(',');
-        sb.append("complemento");
-        sb.append('=');
-        sb.append(((this.complemento == null) ? "<null>" : this.complemento));
-        sb.append(',');
-        sb.append("unidade");
-        sb.append('=');
-        sb.append(((this.unidade == null) ? "<null>" : this.unidade));
-        sb.append(',');
-        sb.append("bairro");
-        sb.append('=');
-        sb.append(((this.bairro == null) ? "<null>" : this.bairro));
-        sb.append(',');
-        sb.append("localidade");
-        sb.append('=');
-        sb.append(((this.localidade == null) ? "<null>" : this.localidade));
-        sb.append(',');
-        sb.append("uf");
-        sb.append('=');
-        sb.append(((this.uf == null) ? "<null>" : this.uf));
-        sb.append(',');
-        sb.append("estado");
-        sb.append('=');
-        sb.append(((this.estado == null) ? "<null>" : this.estado));
-        sb.append(',');
-        sb.append("regiao");
-        sb.append('=');
-        sb.append(((this.regiao == null) ? "<null>" : this.regiao));
-        sb.append(',');
-        sb.append("ibge");
-        sb.append('=');
-        sb.append(((this.ibge == null) ? "<null>" : this.ibge));
-        sb.append(',');
-        sb.append("gia");
-        sb.append('=');
-        sb.append(((this.gia == null) ? "<null>" : this.gia));
-        sb.append(',');
-        sb.append("ddd");
-        sb.append('=');
-        sb.append(((this.ddd == null) ? "<null>" : this.ddd));
-        sb.append(',');
-        sb.append("siafi");
-        sb.append('=');
-        sb.append(((this.siafi == null) ? "<null>" : this.siafi));
-        sb.append(',');
-        if (sb.charAt((sb.length() - 1)) == ',') {
-            sb.setCharAt((sb.length() - 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
+    public Set<Cliente> getClientes() {
+        return clientes;
     }
 
+    public void setClientes(Set<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco [cep=" + cep + ", logradouro=" + logradouro + ", complemento=" + complemento + ", unidade="
+                + unidade + ", bairro=" + bairro + ", localidade=" + localidade + ", uf=" + uf + ", estado=" + estado
+                + ", regiao=" + regiao + ", ibge=" + ibge + ", gia=" + gia + ", ddd=" + ddd + ", siafi=" + siafi
+                + ", clientes=" + clientes + "]";
+    }
+
+    // Método helper
+    public void adicionarCliente(Cliente cliente) {
+        clientes.add(cliente);
+        cliente.setEndereco(this);
+    }
 }

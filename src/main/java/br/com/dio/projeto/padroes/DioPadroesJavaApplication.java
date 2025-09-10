@@ -1,8 +1,9 @@
-package br.com.dio.projeto.padroes.dio_padroes_java;
+package br.com.dio.projeto.padroes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Projeto Spring Boot gerado via Spring Initializr no VS Code.
@@ -16,6 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableFeignClients
 @SpringBootApplication
+//@ComponentScan(basePackages = {"br.com.dio.projeto.padroes"})
 public class DioPadroesJavaApplication {
 
 	public static void main(String[] args) {
