@@ -1,14 +1,9 @@
 package br.com.dio.projeto.padroes.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 /**
  * Os atributos desse modelo/entity foram gerados automaticamente pelo site
@@ -20,6 +15,7 @@ import jakarta.persistence.OneToMany;
  * @author victorvlima
  */
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Endereco {
 
     @Id
@@ -36,9 +32,6 @@ public class Endereco {
     private String gia;
     private String ddd;
     private String siafi;
-
-    @OneToMany(mappedBy = "endereco", fetch = FetchType.LAZY)
-    private Set<Cliente> clientes = new HashSet<>();
 
     public String getCep() {
         return cep;
@@ -142,27 +135,5 @@ public class Endereco {
 
     public void setSiafi(String siafi) {
         this.siafi = siafi;
-    }
-
-    public Set<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(Set<Cliente> clientes) {
-        this.clientes = clientes;
-    }
-
-    @Override
-    public String toString() {
-        return "Endereco [cep=" + cep + ", logradouro=" + logradouro + ", complemento=" + complemento + ", unidade="
-                + unidade + ", bairro=" + bairro + ", localidade=" + localidade + ", uf=" + uf + ", estado=" + estado
-                + ", regiao=" + regiao + ", ibge=" + ibge + ", gia=" + gia + ", ddd=" + ddd + ", siafi=" + siafi
-                + ", clientes=" + clientes + "]";
-    }
-
-    // Método helper
-    public void adicionarCliente(Cliente cliente) {
-        clientes.add(cliente);
-        cliente.setEndereco(this);
     }
 }
